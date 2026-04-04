@@ -1,0 +1,26 @@
+name: Deploy MkDocs
+
+on:
+  push:
+    branches:
+      - docs
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar repositório
+        uses: actions/checkout@v3
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+
+      - name: Instalar dependências
+        run: |
+          pip install mkdocs mkdocs-material
+
+      - name: Deploy para GitHub Pages
+        run: mkdocs gh-deploy --force
