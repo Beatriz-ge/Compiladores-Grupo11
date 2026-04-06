@@ -41,8 +41,8 @@ nav:
       - Sprints: planejamento/sprints.md
 
   - Evolução:
-      - P1: evolucao/p1.md
-      - P2: evolucao/p2.md
+      - Ponto de Controle 1: evolucao/p1.md
+      - Ponto de Controle 2: evolucao/p2.md
 
   - Testes:
       - Testes: testes/testes.md
