@@ -1,16 +1,16 @@
-# 🎯 Escopo do Projeto
+# Escopo do Projeto
 
 Este projeto tem como objetivo o desenvolvimento de um compilador acadêmico capaz de traduzir programas escritos em linguagem C para linguagem Python, contemplando as principais etapas do processo de compilação.
 
 ---
 
-## 🚀 Visão Geral
+## Visão Geral
 
 O sistema realiza a leitura de código em C, processa suas estruturas internas e gera um código equivalente em Python, respeitando as limitações definidas neste escopo.
 
 ---
 
-## 📊 Escopo Funcional
+##  Escopo Funcional
 
 <table>
   <thead>
@@ -71,21 +71,27 @@ O sistema realiza a leitura de código em C, processa suas estruturas internas e
 
 ---
 
-## 📌 Linguagens Envolvidas
+## Linguagens Envolvidas
 
 - **Entrada:** C (subconjunto)
 - **Saída:** Python
 
 ---
 
-## 🧪 Contexto de Uso
+## Contexto de Uso
 
 Este projeto é voltado para fins acadêmicos, com foco na aplicação prática dos conceitos de compiladores.
 
 ---
 
-## 📎 Considerações Finais
+## Considerações Finais
 
 O escopo foi definido para garantir um equilíbrio entre profundidade técnica e viabilidade de implementação, permitindo a construção de um compilador funcional dentro do tempo disponível.
 
-<center> Autora: Beatriz Lins </center>
+---
+## Histórico de Versões
+
+| Versão |  Data  |  Descrição  |  Autor(es)  |
+| :----: | :--------: | :------------------: | :----------------------------------------------------------------------------------------: | 
+|  `1.0` | 07/04/2025 | Criação do documento |[Beatriz Lins](https://github.com/Beatriz-ge) | 
+|  `1.1` | 09/04/2025 | Refatorando o texto |[Arthur Fernandes](https://github.com/arthurfernandesj) | 
