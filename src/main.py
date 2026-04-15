@@ -2,12 +2,15 @@ from lexer.lexer import Lexer
 from parser.parser import Parser
 
 def main():
-    code = "int x = 10;"
+    code = """
+    {
+        int x = 10;
+        return x;
+    }
+    """
 
-    lexer = Lexer(code)
-    parser = Parser(lexer)
-
-    result = parser.parse_declaration()
+    parser = Parser(Lexer(code))
+    result = parser.parse_block()
 
     print(result)
 
