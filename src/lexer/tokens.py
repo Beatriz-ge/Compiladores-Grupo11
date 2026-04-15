@@ -10,6 +10,11 @@ class TokenType(Enum):
     ASSIGN = auto()
     SEMICOLON = auto()
 
+    LPAREN = auto()
+    RPAREN = auto()   
+    LBRACE = auto()
+    RBRACE = auto() 
+
     EOF = auto()
 
 
