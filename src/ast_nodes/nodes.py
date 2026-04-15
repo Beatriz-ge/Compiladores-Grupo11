@@ -12,3 +12,10 @@ class Return:
 
     def __repr__(self):
         return f"Return(value={self.value})"
+
+class Block:
+    def __init__(self, statements):
+        self.statements = statements
+
+    def __repr__(self):
+        return f"Block(statements={self.statements})"
