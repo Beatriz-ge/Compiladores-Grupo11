@@ -1,5 +1,6 @@
 from lexer.tokens import TokenType
-from ast.nodes import VarDecl
+from ast_nodes.nodes import VarDecl, Return
+
 
 class Parser:
     def __init__(self, lexer):
@@ -30,3 +31,24 @@ class Parser:
         self.eat(TokenType.SEMICOLON)
 
         return VarDecl(var_name, value)
+
+    def parse_return(self):
+        self.eat(TokenType.RETURN)
+
+        value = None
+
+        # pode ser número ou identificador
+        if self.current_token.type == TokenType.NUMBER:
+            value = self.current_token.value
+            self.eat(TokenType.NUMBER)
+
+        elif self.current_token.type == TokenType.IDENTIFIER:
+            value = self.current_token.value
+            self.eat(TokenType.IDENTIFIER)
+
+        else:
+            raise Exception("Erro: return precisa de um valor válido")
+
+        self.eat(TokenType.SEMICOLON)
+
+        return Return(value)
