@@ -62,9 +62,12 @@ class Parser:
     def parse_expression(self):
         left = self.parse_term()
 
-        while self.current_token.type == TokenType.PLUS:
+        while self.current_token.type in (TokenType.PLUS, TokenType.MINUS):
             op = self.current_token
-            self.eat(TokenType.PLUS)
+            if op.type == TokenType.PLUS:
+                self.eat(TokenType.PLUS)
+            else:
+                self.eat(TokenType.MINUS)
             right = self.parse_term()
             left = BinOp(left, op, right)
 

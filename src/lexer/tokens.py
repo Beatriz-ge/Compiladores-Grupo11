@@ -18,6 +18,7 @@ class TokenType(Enum):
     EOF = auto()
 
     PLUS = auto()
+    MINUS = auto()
 
 
 class Token:

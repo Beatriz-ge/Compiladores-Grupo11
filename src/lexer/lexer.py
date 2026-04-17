@@ -82,6 +82,9 @@ class Lexer:
             if self.current_char == "+":
                 self.advance()
                 return Token(TokenType.PLUS)
+            if self.current_char == "-":
+                self.advance()
+                return Token(TokenType.MINUS)
 
             raise Exception(f"Caractere inválido: {self.current_char}")
 
