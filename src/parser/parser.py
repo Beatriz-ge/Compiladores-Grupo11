@@ -1,6 +1,5 @@
 from lexer.tokens import TokenType
-from ast_nodes.nodes import VarDecl, Return, Block, BinOp
-
+from ast_nodes.nodes import VarDecl, Return, Block, MainNode, BinOp
 
 class Parser:
     def __init__(self, lexer):
@@ -86,3 +85,18 @@ class Parser:
 
         else:
             raise Exception(f"Token inesperado: {token}")
+
+    def parse_program(self):
+        """ Regra: Programa -> INT MAIN LPAREN RPAREN Bloco """
+        self.eat(TokenType.INT)
+
+        if self.current_token.value != 'main':
+            raise Exception(f"Erro: Esperado 'main', mas veio '{self.current_token.value}'")
+        self.eat(TokenType.IDENTIFIER)
+
+
+        self.eat(TokenType.LPAREN)
+        self.eat(TokenType.RPAREN)
+
+        corpo = self.parse_block()
+        return MainNode(corpo)

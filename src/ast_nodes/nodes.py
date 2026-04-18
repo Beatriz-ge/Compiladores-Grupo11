@@ -28,3 +28,10 @@ class BinOp:
 
     def __repr__(self):
         return f"BinOp({self.left} {self.op.type.name} {self.right})"
+
+class MainNode:
+    def __init__(self, body):
+        self.body = body
+
+    def __repr__(self):
+        return f"MainNode(body={self.body})"
