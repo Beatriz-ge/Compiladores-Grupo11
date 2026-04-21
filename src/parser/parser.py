@@ -1,5 +1,6 @@
 from lexer.tokens import TokenType
 from ast_nodes.nodes import VarDecl, Return, Block, MainNode, BinOp
+from ast_nodes.factory import create_number, create_binary
 
 class Parser:
     def __init__(self, lexer):
@@ -68,7 +69,7 @@ class Parser:
             else:
                 self.eat(TokenType.MINUS)
             right = self.parse_term()
-            left = BinOp(left, op, right)
+            left = create_binary(left, op, right)
 
         return left
     
@@ -82,7 +83,7 @@ class Parser:
             else:
                 self.eat(TokenType.DIV)
             right = self.parse_factor()
-            left = BinOp(left, op, right)
+            left = create_binary(left, op, right)
 
         return left
     
@@ -91,7 +92,7 @@ class Parser:
 
         if token.type == TokenType.NUMBER:
             self.eat(TokenType.NUMBER)
-            return token.value
+            return create_number(token.value)
 
         elif token.type == TokenType.IDENTIFIER:
             self.eat(TokenType.IDENTIFIER)
@@ -114,3 +115,22 @@ class Parser:
 
         corpo = self.parse_block()
         return MainNode(corpo)
+
+
+    def parser_number(self):
+        token = self.current_token
+        self.eat(TokenType.NUMBER)
+        return create_number(token.value)
+    
+
+    def parser_expression(self):
+        left = self.parse_term()
+
+        while self.current_token.type == TokenType.PLUS:
+            op = self.current_token.type
+            self.eat(TokenType.PLUS)
+            right = self.parse_term()
+
+            left = create_binary(left, op, right)
+
+        return left
