@@ -10,11 +10,11 @@ class Lexer:
 
         self.current_char = self.source[self.pos] if source else None
 
-    # Avança para o próximo caractere, atualizando linha e coluna
+    # Avança caractere (controle correto de linha/coluna)
     def advance(self):
         if self.current_char == "\n":
             self.line += 1
-            self.column = 0
+            self.column = 1
         else:
             self.column += 1
 
@@ -29,8 +29,14 @@ class Lexer:
         while self.current_char and self.current_char.isspace():
             self.advance()
 
-    def make_token(self, type, value=None):
-        token = Token(type, value, self.line, self.column)
+    # 🔹 Método padrão para criar tokens (SEMPRE usar)
+    def make_token(self, type, value=None, line=None, column=None):
+        token = Token(
+            type,
+            value,
+            line if line is not None else self.line,
+            column if column is not None else self.column
+        )
 
         if hasattr(self, "debug") and self.debug:
             print(f"[TOKEN] {token}")
@@ -38,15 +44,21 @@ class Lexer:
         return token
 
     def number(self):
+        start_line = self.line
+        start_column = self.column
+
         result = ""
 
         while self.current_char and self.current_char.isdigit():
             result += self.current_char
             self.advance()
 
-        return Token(TokenType.NUMBER, int(result), self.line, self.column)
+        return self.make_token(TokenType.NUMBER, int(result), start_line, start_column)
 
     def identifier(self):
+        start_line = self.line
+        start_column = self.column
+
         result = ""
 
         while self.current_char and (
@@ -56,11 +68,11 @@ class Lexer:
             self.advance()
 
         if result == "int":
-            return Token(TokenType.INT, None, self.line, self.column)
+            return self.make_token(TokenType.INT, None, start_line, start_column)
         elif result == "return":
-            return Token(TokenType.RETURN, None, self.line, self.column)
+            return self.make_token(TokenType.RETURN, None, start_line, start_column)
 
-        return Token(TokenType.IDENTIFIER, result, self.line, self.column)
+        return self.make_token(TokenType.IDENTIFIER, result, start_line, start_column)
 
     def get_next_token(self):
         while self.current_char:
@@ -75,43 +87,58 @@ class Lexer:
             if self.current_char.isalpha() or self.current_char == "_":
                 return self.identifier()
 
+            # 🔹 operadores e símbolos (posição correta)
             if self.current_char == "=":
+                token = self.make_token(TokenType.ASSIGN)
                 self.advance()
-                return Token(TokenType.ASSIGN, None, self.line, self.column)
+                return token
 
             if self.current_char == ";":
+                token = self.make_token(TokenType.SEMICOLON)
                 self.advance()
-                return Token(TokenType.SEMICOLON, None, self.line, self.column)
+                return token
 
             if self.current_char == "(":
+                token = self.make_token(TokenType.LPAREN)
                 self.advance()
-                return Token(TokenType.LPAREN, None, self.line, self.column)
+                return token
 
             if self.current_char == ")":
+                token = self.make_token(TokenType.RPAREN)
                 self.advance()
-                return Token(TokenType.RPAREN, None, self.line, self.column)
+                return token
 
             if self.current_char == "{":
+                token = self.make_token(TokenType.LBRACE)
                 self.advance()
-                return Token(TokenType.LBRACE, None, self.line, self.column)
+                return token
 
             if self.current_char == "}":
+                token = self.make_token(TokenType.RBRACE)
                 self.advance()
-                return Token(TokenType.RBRACE, None, self.line, self.column)
+                return token
 
             if self.current_char == "+":
+                token = self.make_token(TokenType.PLUS)
                 self.advance()
-                return Token(TokenType.PLUS)
+                return token
+
             if self.current_char == "-":
+                token = self.make_token(TokenType.MINUS)
                 self.advance()
-                return Token(TokenType.MINUS)
+                return token
+
             if self.current_char == "*":
+                token = self.make_token(TokenType.MULT)
                 self.advance()
-                return Token(TokenType.MULT)
+                return token
+
             if self.current_char == "/":
+                token = self.make_token(TokenType.DIV)
                 self.advance()
-                return Token(TokenType.DIV)
+                return token
 
             raise Exception(f"Caractere inválido: {self.current_char}")
 
-        return Token(TokenType.EOF, None, self.line, self.column)
+        return self.make_token(TokenType.EOF)
+    

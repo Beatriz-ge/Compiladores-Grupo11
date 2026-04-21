@@ -1,10 +1,31 @@
+# definição dos nós da AST
+
+class Number:
+    def __init__(self, value):
+        self.value = value
+
+    def __repr__(self):
+        return f"Number({self.value})"
+
+
+class BinOp:
+    def __init__(self, left, op, right):
+        self.left = left
+        self.op = op          # Token
+        self.right = right
+
+    def __repr__(self):
+        return f"Binary({self.left} {self.op.type.name} {self.right})"
+
+
 class VarDecl:
-    def __init__(self, name, value=None):
+    def __init__(self, name, value):
         self.name = name
         self.value = value
 
     def __repr__(self):
         return f"VarDecl(name={self.name}, value={self.value})"
+
 
 class Return:
     def __init__(self, value):
@@ -13,21 +34,14 @@ class Return:
     def __repr__(self):
         return f"Return(value={self.value})"
 
+
 class Block:
     def __init__(self, statements):
         self.statements = statements
 
     def __repr__(self):
         return f"Block(statements={self.statements})"
-    
-class BinOp:
-    def __init__(self, left, op, right):
-        self.left = left
-        self.op = op
-        self.right = right
 
-    def __repr__(self):
-        return f"BinOp({self.left} {self.op.type.name} {self.right})"
 
 class MainNode:
     def __init__(self, body):
@@ -35,3 +49,4 @@ class MainNode:
 
     def __repr__(self):
         return f"MainNode(body={self.body})"
+
