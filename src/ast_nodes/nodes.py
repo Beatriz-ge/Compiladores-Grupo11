@@ -50,3 +50,19 @@ class MainNode:
     def __repr__(self):
         return f"MainNode(body={self.body})"
 
+class Program:
+    def __init__(self, functions):
+        self.functions = functions  # Uma lista de FunctionNode
+
+    def __repr__(self):
+        return f"Program(functions={self.functions})"
+
+class Function:
+    def __init__(self, return_type, name, parameters, body):
+        self.return_type = return_type
+        self.name = name
+        self.parameters = parameters 
+        self.body = body            
+
+    def __repr__(self):
+        return f"Function(name={self.name}, return={self.return_type}, body={self.body})"
