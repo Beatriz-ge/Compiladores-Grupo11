@@ -10,7 +10,7 @@ def test_var_decl():
     result = parser.parse_declaration()
 
     assert result.name == "x"
-    assert result.value == 5
+    assert result.value.value == 5
 
 
 def test_return_number():
@@ -19,7 +19,7 @@ def test_return_number():
 
     result = parser.parse_return()
 
-    assert result.value == 10
+    assert result.value.value == 10
 
 
 def test_return_identifier():
@@ -42,7 +42,7 @@ def test_parse_main_program():
         parser = Parser(Lexer(code))
         result = parser.parse_program()
         
-        assert result.body is not None
+        assert result.functions[0].body is not None
 
 def test_precedencia_multiplicacao():
     
@@ -53,8 +53,8 @@ def test_precedencia_multiplicacao():
     expr = result.value
     assert expr.op.type == TokenType.PLUS
     assert expr.right.op.type == TokenType.MULT
-    assert expr.right.left == 3
-    assert expr.right.right == 4
+    assert expr.right.left.value == 3
+    assert expr.right.right.value == 4
 
 def test_precedencia_divisao_subtracao():
     

@@ -105,25 +105,11 @@ class Parser:
         """ Regra: Programa -> (Function)* """
         functions = []
         
-        # Enquanto não chegar no fim do arquivo (EOF), ele continua procurando funções
         while self.current_token.type != TokenType.EOF:
             functions.append(self.parse_function())
         
         from ast_nodes.nodes import Program
         return Program(functions)
-    
-        ''' self.eat(TokenType.INT)
-
-        if self.current_token.value != 'main':
-            raise Exception(f"Erro: Esperado 'main', mas veio '{self.current_token.value}'")
-        self.eat(TokenType.IDENTIFIER)
-
-
-        self.eat(TokenType.LPAREN)
-        self.eat(TokenType.RPAREN)
-
-        corpo = self.parse_block()
-        return MainNode(corpo)'''
 
 
     def parser_number(self):
@@ -131,23 +117,12 @@ class Parser:
         self.eat(TokenType.NUMBER)
         return create_number(token.value)
     
-
-    def parser_expression(self):
-        left = self.parse_term()
-
-        while self.current_token.type == TokenType.PLUS:
-            op = self.current_token.type
-            self.eat(TokenType.PLUS)
-            right = self.parse_term()
-
-            left = create_binary(left, op, right)
-
-        return left
     
     def parse_function(self):
         """ Regra: Function -> INT IDENTIFIER LPAREN RPAREN Bloco """
     
-        return_type = self.current_token.value 
+        token_tipo = self.current_token
+        return_type = token_tipo.value if token_tipo.value else token_tipo.type.name
         self.eat(TokenType.INT)
 
         func_name = self.current_token.value
@@ -156,7 +131,7 @@ class Parser:
         self.eat(TokenType.LPAREN)
         self.eat(TokenType.RPAREN)
 
-        corpo = self.parse_block()
+        body = self.parse_block()
         
         from ast_nodes.nodes import Function
-        return Function(return_type, func_name, corpo)
+        return Function(return_type, func_name, [], body)

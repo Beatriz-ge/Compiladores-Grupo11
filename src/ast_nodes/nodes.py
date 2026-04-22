@@ -65,4 +65,4 @@ class Function:
         self.body = body            
 
     def __repr__(self):
-        return f"Function(name={self.name}, return={self.return_type}, body={self.body})"
+        return f"Function(name='{self.name}', return='{self.return_type}', params={self.parameters}, body={self.body})"
